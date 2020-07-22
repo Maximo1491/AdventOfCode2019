@@ -12,6 +12,7 @@ constexpr int MULTIPLY_COMMAND = 2;
 constexpr int END_COMMAND = 99;
 constexpr int MINIMUM_INPUT = 0;
 constexpr int MAXIMUM_INPUT = 99;
+constexpr int MAGIC_OUTPUT = 19690720;
 
 void part1()
 {
@@ -106,11 +107,11 @@ void part2()
 
 		std::vector<int> reset_vector = input_vector;
 
+		//Bruteforce the inputs to find the magic output
 		for ( int noun = MINIMUM_INPUT; noun < MAXIMUM_INPUT; noun++ )
 		{
 			for ( int verb = MINIMUM_INPUT; verb < MAXIMUM_INPUT; verb++ )
 			{
-				bool end = false;
 				input_vector = reset_vector;
 				input_vector[FIRST_INDEX] = noun;
 				input_vector[SECOND_INDEX] = verb;
@@ -137,14 +138,10 @@ void part2()
 						break;
 					case END_COMMAND:
 						{
-							if ( input_vector[0] == 19690720 )
+							//Output will be stored at the start of the array
+							if ( input_vector[0] == MAGIC_OUTPUT )
 							{
 								std::cout << "We've found 19690720 lads, noun = " << noun << " verb = " << verb << " answer = " << 100 * noun + verb << "\n";
-								end = true;
-							}
-							else
-							{
-								end = true;
 							}
 						}
 						break;
@@ -155,7 +152,7 @@ void part2()
 						break;
 					}
 
-					if ( end )
+					if ( input_vector[i] == END_COMMAND )
 					{
 						break;
 					}
